@@ -98,6 +98,9 @@ namespace Features
             {
                 ActiveScreen = _selectDemoScreen,
             };
+
+            _selectDemoScreen.Hide();
+            LoadDemo("Animations");
         }
 
         private void LoadDemo(string name)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -16,52 +15,48 @@ namespace Features.Demos
         public override string Name => "Animations";
 
         private SpriteBatch _spriteBatch;
-        private Zombie _zombie;
-        private SpriteSheetAnimation _animation;
-        private Sprite _fireballSprite;
-        private AnimatedSprite _motwSprite;
 
-        public AnimationsDemo(GameMain game) : base(game)
+        private AnimatedSprite _animatedSprite;
+
+        //private Zombie _zombie;
+        //private SpriteSheetAnimation _animation;
+        //private Sprite _fireballSprite;
+        //private AnimatedSprite _motwSprite;
+
+        public AnimationsDemo(GameMain game)
+            : base(game)
         {
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            //_viewportAdapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 480);
-            //_camera = new Camera2D(_viewportAdapter)
-            //{
-            //    MinimumZoom = 0.1f,
-            //    MaximumZoom = 2.0f,
-            //    Zoom = 1f,
-            //    Origin = new Vector2(400, 240),
-            //    Position = new Vector2(408, 270)
-            //};
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            var zombieAnimations = Content.Load<SpriteSheetAnimationFactory>("Animations/zombie-animations");
-            _zombie = new Zombie(zombieAnimations) {Position = new Vector2(100, 100)};
+            var texture = Content.Load<Texture2D>("Animations/elthen-spider");
+            var textureAtlas = TextureAtlas.Create("elthen-adventurer", texture, 32, 32);
+            var animations = new SpriteSheetAnimationFactory(textureAtlas);
+            animations.Add("idle", new SpriteSheetAnimationData(new[] { 0, 1, 2, 3, 4 }, 0.15f));
+            animations.Add("walk", new SpriteSheetAnimationData(new[] { 9, 10, 11, 12, 13, 14 }, 0.15f));
+            _animatedSprite = new AnimatedSprite(animations, "idle");
 
-            var fireballTexture = Content.Load<Texture2D>("Animations/fireball");
-            var fireballAtlas = TextureAtlas.Create("Animations/fireball-atlas", fireballTexture, 130, 50);
-            _animation = new SpriteSheetAnimation("fireballAnimation", fireballAtlas.Regions.ToArray()) { FrameDuration = 0.2f };
-            _fireballSprite = new Sprite(_animation.CurrentFrame);// { Position = new Vector2(-150, 100) };
+            //var zombieAnimations = Content.Load<SpriteSheetAnimationFactory>("Animations/zombie-animations");
+            //_zombie = new Zombie(zombieAnimations, new Vector2(100, 100));
 
-            var motwTexture = Content.Load<Texture2D>("Animations/motw");
-            var motwAtlas = TextureAtlas.Create("Animations/fireball-atlas", motwTexture, 52, 72);
-            var motwAnimationFactory = new SpriteSheetAnimationFactory(motwAtlas);
-            motwAnimationFactory.Add("idle", new SpriteSheetAnimationData(new[] { 0 }));
-            motwAnimationFactory.Add("walkSouth", new SpriteSheetAnimationData(new[] { 0, 1, 2, 1 }, isLooping: false));
-            motwAnimationFactory.Add("walkWest", new SpriteSheetAnimationData(new[] { 12, 13, 14, 13 }, isLooping: false));
-            motwAnimationFactory.Add("walkEast", new SpriteSheetAnimationData(new[] { 24, 25, 26, 25 }, isLooping: false));
-            motwAnimationFactory.Add("walkNorth", new SpriteSheetAnimationData(new[] { 36, 37, 38, 37 }, isLooping: false));
-            _motwSprite = new AnimatedSprite(motwAnimationFactory);// { Position = new Vector2(20, 20) };
-            _motwSprite.Play("walkSouth").IsLooping = true;
+            //var fireballTexture = Content.Load<Texture2D>("Animations/fireball");
+            //var fireballAtlas = TextureAtlas.Create("Animations/fireball-atlas", fireballTexture, 130, 50);
+            //_animation = new SpriteSheetAnimation("fireballAnimation", fireballAtlas.Regions.ToArray()) { FrameDuration = 0.2f };
+            //_fireballSprite = new Sprite(_animation.CurrentFrame);// { Position = new Vector2(-150, 100) };
+
+            //var motwTexture = Content.Load<Texture2D>("Animations/motw");
+            //var motwAtlas = TextureAtlas.Create("Animations/fireball-atlas", motwTexture, 52, 72);
+            //var motwAnimationFactory = new SpriteSheetAnimationFactory(motwAtlas);
+            //motwAnimationFactory.Add("idle", new SpriteSheetAnimationData(new[] { 0 }));
+            //motwAnimationFactory.Add("walkSouth", new SpriteSheetAnimationData(new[] { 0, 1, 2, 1 }, isLooping: false));
+            //motwAnimationFactory.Add("walkWest", new SpriteSheetAnimationData(new[] { 12, 13, 14, 13 }, isLooping: false));
+            //motwAnimationFactory.Add("walkEast", new SpriteSheetAnimationData(new[] { 24, 25, 26, 25 }, isLooping: false));
+            //motwAnimationFactory.Add("walkNorth", new SpriteSheetAnimationData(new[] { 36, 37, 38, 37 }, isLooping: false));
+            //_motwSprite = new AnimatedSprite(motwAnimationFactory);// { Position = new Vector2(20, 20) };
+            //_motwSprite.Play("walkSouth").IsLooping = true;
         }
 
         protected override void Update(GameTime gameTime)
@@ -69,18 +64,20 @@ namespace Features.Demos
             var deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
             var keyboardState = Keyboard.GetState();
 
-            // motw
-            if (keyboardState.IsKeyDown(Keys.W))
-                _motwSprite.Play("walkNorth");
+            _animatedSprite.Update(deltaSeconds);
 
-            if (keyboardState.IsKeyDown(Keys.A))
-                _motwSprite.Play("walkWest");
+            //// motw
+            //if (keyboardState.IsKeyDown(Keys.W))
+            //    _motwSprite.Play("walkNorth");
 
-            if (keyboardState.IsKeyDown(Keys.S))
-                _motwSprite.Play("walkSouth");
+            //if (keyboardState.IsKeyDown(Keys.A))
+            //    _motwSprite.Play("walkWest");
 
-            if (keyboardState.IsKeyDown(Keys.D))
-                _motwSprite.Play("walkEast");
+            //if (keyboardState.IsKeyDown(Keys.S))
+            //    _motwSprite.Play("walkSouth");
+
+            //if (keyboardState.IsKeyDown(Keys.D))
+            //    _motwSprite.Play("walkEast");
 
             // camera
             if (keyboardState.IsKeyDown(Keys.R))
@@ -89,31 +86,26 @@ namespace Features.Demos
             if (keyboardState.IsKeyDown(Keys.F))
                 Camera.ZoomOut(deltaSeconds);
 
-            // zombie
-            if (keyboardState.IsKeyDown(Keys.Left))
-                _zombie.Walk(-1.0f);
+            //// zombie
+            //if (keyboardState.IsKeyDown(Keys.Left))
+            //    _zombie.Walk(-1.0f);
 
-            if (keyboardState.IsKeyDown(Keys.Right))
-                _zombie.Walk(1.0f);
+            //if (keyboardState.IsKeyDown(Keys.Right))
+            //    _zombie.Walk(1.0f);
 
-            if (keyboardState.IsKeyDown(Keys.Space))
-                _zombie.Attack();
+            //if (keyboardState.IsKeyDown(Keys.Space))
+            //    _zombie.Attack();
 
-            //if (keyboardState.IsKeyDown(Keys.Up))
-            //    _zombie.Jump();
+            //if (keyboardState.IsKeyDown(Keys.Enter))
+            //    _zombie.Die();
 
-            if (keyboardState.IsKeyDown(Keys.Enter))
-                _zombie.Die();
+            //// update must be called before collision detection
+            //_zombie.Update(gameTime);
 
-            // update must be called before collision detection
-            _zombie.Update(gameTime);
-            //_world.Update(gameTime);
-            Camera.LookAt(_zombie.Position);
+            //_animation.Update(deltaSeconds);
+            //_fireballSprite.TextureRegion = _animation.CurrentFrame;
 
-            _animation.Update(deltaSeconds);
-            _fireballSprite.TextureRegion = _animation.CurrentFrame;
-
-            _motwSprite.Update(deltaSeconds);
+            //_motwSprite.Update(deltaSeconds);
 
             base.Update(gameTime);
         }
@@ -122,15 +114,19 @@ namespace Features.Demos
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin(transformMatrix: Camera.GetViewMatrix(), samplerState: SamplerState.PointClamp);
-            _zombie.Draw(_spriteBatch);
-            //_spriteBatch.Draw(_fireballSprite);
+            //_spriteBatch.Begin(transformMatrix: Camera.GetViewMatrix(), samplerState: SamplerState.PointClamp);
+            //_zombie.Draw(_spriteBatch);
+            //_spriteBatch.Draw(_fireballSprite, new Transform2(200, 200));
+            //_spriteBatch.End();
+
+            //_spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.GetViewMatrix());
+            //_spriteBatch.Draw(_motwSprite, new Transform2(300, 300));
+            //_spriteBatch.End();
+
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(4));
+            _spriteBatch.Draw(_animatedSprite, new Transform2(50, 50));
             _spriteBatch.End();
 
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Camera.GetViewMatrix());
-
-            //_spriteBatch.Draw(_motwSprite);
-            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
@@ -148,24 +144,27 @@ namespace Features.Demos
 
     public class Zombie : IUpdate
     {
+        public Zombie(SpriteSheetAnimationFactory animations, Vector2 position)
+        {
+            _sprite = new AnimatedSprite(animations);
+            _transform = new Transform2(position);
+
+            State = ZombieState.Appearing;
+            IsOnGround = false;
+        }
+
         private readonly AnimatedSprite _sprite;
         private float _direction = -1.0f;
         private ZombieState _state;
-        private Transform2 _transform;
+        private readonly Transform2 _transform;
 
         public RectangleF BoundingBox => _sprite.GetBoundingRectangle(_transform.Position, _transform.Rotation, _transform.Scale);
         public bool IsOnGround { get; private set; }
         public bool IsReady => State != ZombieState.Appearing && State != ZombieState.Dying;
 
-        public Vector2 Position
-        {
-            get { return _transform.Position; }
-            set { _transform.Position = value; }
-        }
-
         public ZombieState State
         {
-            get { return _state; }
+            get => _state;
             private set
             {
                 if (_state != value)
@@ -196,15 +195,6 @@ namespace Features.Demos
 
         public Vector2 Velocity { get; set; }
 
-        public Zombie(SpriteSheetAnimationFactory animations)
-        {
-            _sprite = new AnimatedSprite(animations);
-            _transform = new Transform2();
-
-            State = ZombieState.Appearing;
-            IsOnGround = false;
-        }
-
         public void Update(GameTime gameTime)
         {
             _sprite.Update(gameTime);
@@ -213,11 +203,14 @@ namespace Features.Demos
 
             if (State == ZombieState.Walking && Math.Abs(Velocity.X) < 0.1f)
                 State = ZombieState.Idle;
+
+            _transform.Position += Velocity * gameTime.GetElapsedSeconds();
+            Velocity = Vector2.Zero;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //spriteBatch.Draw(_sprite);
+            spriteBatch.Draw(_sprite, _transform);
         }
 
         public void Walk(float direction)
