@@ -1,0 +1,8 @@
+﻿{
+  "transform": {
+    "position": [ 400, 240 ]
+  },
+  "sprite": {
+    "textureRegion": "elthen-spider"
+  }
+}

@@ -17,13 +17,15 @@ namespace MonoGame.Extended.Serialization
         {
             var values = reader.ReadAsMultiDimensional<float>();
 
-            if(values.Length == 2)
-                return new Vector2(values[0], values[1]);
-
-            if (values.Length == 1)
-                return new Vector2(values[0]);
-
-            throw new InvalidOperationException("Invalid Vector2");
+            switch (values.Length)
+            {
+                case 2:
+                    return new Vector2(values[0], values[1]);
+                case 1:
+                    return new Vector2(values[0]);
+                default:
+                    throw new InvalidOperationException("Invalid Vector2");
+            }
         }
 
         public override bool CanConvert(Type objectType)

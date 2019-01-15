@@ -23,8 +23,8 @@ namespace Spiders
         protected override void LoadContent()
         {
             _world = new WorldBuilder()
-                .AddSystem(new RenderSystem(GraphicsDevice))
-                .AddSystem(new SpawnSystem(Content))
+                .AddSystem(world => new RenderSystem(GraphicsDevice))
+                .AddSystem(world => new SpawnSystem(world, Content))
                 .Build();
 
             Components.Add(_world);

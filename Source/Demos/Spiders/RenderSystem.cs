@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended;
 using MonoGame.Extended.Entities;
 using MonoGame.Extended.Entities.Systems;
 using MonoGame.Extended.Sprites;
@@ -11,9 +12,10 @@ namespace Spiders
         private readonly GraphicsDevice _graphicsDevice;
         private readonly SpriteBatch _spriteBatch;
         private ComponentMapper<Sprite> _spriteMapper;
+        private ComponentMapper<Transform2> _transformMapper;
 
         public RenderSystem(GraphicsDevice graphicsDevice)
-            : base(Aspect.All(typeof(Sprite)))
+            : base(Aspect.All(typeof(Sprite), typeof(Transform2)))
         {
             _graphicsDevice = graphicsDevice;
             _spriteBatch = new SpriteBatch(graphicsDevice);
@@ -22,18 +24,21 @@ namespace Spiders
         public override void Initialize(IComponentMapperService mapperService)
         {
             _spriteMapper = mapperService.GetMapper<Sprite>();
+            _transformMapper = mapperService.GetMapper<Transform2>();
         }
 
         public override void Draw(GameTime gameTime)
         {
-            _graphicsDevice.Clear(Color.DarkGreen);
+            _graphicsDevice.Clear(Color.DarkOrange);
             
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(2));
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(1));
 
             foreach (var entity in ActiveEntities)
             {
+                var transform = _transformMapper.Get(entity);
                 var sprite = _spriteMapper.Get(entity);
-                sprite.Draw(_spriteBatch, new Vector2(100, 100), 0, Vector2.One);
+
+                sprite.Draw(_spriteBatch, transform.Position, transform.Rotation, transform.Scale);
             }
 
             _spriteBatch.End();

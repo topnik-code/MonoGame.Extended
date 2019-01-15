@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.TextureAtlases;
+using Newtonsoft.Json;
 
 namespace MonoGame.Extended.Sprites
 {
@@ -10,11 +11,10 @@ namespace MonoGame.Extended.Sprites
     {
         private TextureRegion2D _textureRegion;
 
+        [JsonConstructor]
         public Sprite(TextureRegion2D textureRegion)
         {
-            if (textureRegion == null) throw new ArgumentNullException(nameof(textureRegion));
-
-            _textureRegion = textureRegion;
+            _textureRegion = textureRegion ?? throw new ArgumentNullException(nameof(textureRegion));
 
             Alpha = 1.0f;
             Color = Color.White;
@@ -35,16 +35,13 @@ namespace MonoGame.Extended.Sprites
 
         public Vector2 OriginNormalized
         {
-            get { return new Vector2(Origin.X/TextureRegion.Width, Origin.Y/TextureRegion.Height); }
-            set { Origin = new Vector2(value.X*TextureRegion.Width, value.Y*TextureRegion.Height); }
+            get => new Vector2(Origin.X/TextureRegion.Width, Origin.Y/TextureRegion.Height);
+            set => Origin = new Vector2(value.X*TextureRegion.Width, value.Y*TextureRegion.Height);
         }
 
         public Color Color { get; set; }
 
-        public RectangleF GetBoundingRectangle(Transform2 transform)
-        {
-            return GetBoundingRectangle(transform.Position, transform.Rotation, transform.Scale);
-        }
+        public RectangleF GetBoundingRectangle(Transform2 transform) => GetBoundingRectangle(transform.Position, transform.Rotation, transform.Scale);
 
         public RectangleF GetBoundingRectangle(Vector2 position, float rotation, Vector2 scale)
         {
@@ -60,15 +57,13 @@ namespace MonoGame.Extended.Sprites
 
         public TextureRegion2D TextureRegion
         {
-            get { return _textureRegion; }
+            get => _textureRegion;
             set
             {
-                if (value == null)
-                    throw new InvalidOperationException("TextureRegion cannot be null");
 
                 // preserve the origin if the texture size changes
                 var originNormalized = OriginNormalized;
-                _textureRegion = value;
+                _textureRegion = value ?? throw new InvalidOperationException($"{nameof(TextureRegion)} cannot be null");
                 OriginNormalized = originNormalized;
             }
         }
