@@ -31,7 +31,7 @@ namespace Spiders
         {
             _graphicsDevice.Clear(Color.DarkOrange);
             
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(1));
+            _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Matrix.CreateScale(4));
 
             foreach (var entity in ActiveEntities)
             {

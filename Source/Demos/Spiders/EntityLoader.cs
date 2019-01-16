@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Entities;
@@ -9,7 +10,33 @@ using Newtonsoft.Json.Serialization;
 
 namespace Spiders
 {
-    public class EntityLoader : ITextureRegionService
+    public class TextureAtlasJsonConveter : JsonConverter<TextureAtlas>
+    {
+        private readonly ITextureAtlasResolver _resolver;
+
+        public TextureAtlasJsonConveter(ITextureAtlasResolver resolver)
+        {
+            _resolver = resolver;
+        }
+
+        public override void WriteJson(JsonWriter writer, TextureAtlas textureAtlas, JsonSerializer serializer)
+        {
+            writer.WriteValue(textureAtlas.Name);
+        }
+
+        public override TextureAtlas ReadJson(JsonReader reader, Type objectType, TextureAtlas existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            var name = reader.Value.ToString();
+            return _resolver.Resolve(name);
+        }
+    }
+
+    public interface ITextureAtlasResolver
+    {
+        TextureAtlas Resolve(string name);
+    }
+
+    public class EntityLoader : ITextureRegionService, ITextureAtlasResolver
     {
         private readonly World _world;
         private readonly ContentManager _contentManager;
@@ -33,6 +60,7 @@ namespace Spiders
                 Converters =
                 {
                     new TextureRegion2DJsonConverter(this),
+                    new TextureAtlasJsonConveter(this),
                     new EntityJsonConveter(_world),
                     new Vector2JsonConverter()
                 }
@@ -49,6 +77,12 @@ namespace Spiders
         {
             var texture = _contentManager.Load<Texture2D>(name);
             return new TextureRegion2D(texture);
+        }
+
+        public TextureAtlas Resolve(string name)
+        {
+            var texture = _contentManager.Load<Texture2D>(name);
+            return TextureAtlas.Create(name, texture, 32, 32);
         }
     }
 }

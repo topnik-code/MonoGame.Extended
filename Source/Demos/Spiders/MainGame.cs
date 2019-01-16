@@ -25,6 +25,7 @@ namespace Spiders
             _world = new WorldBuilder()
                 .AddSystem(world => new RenderSystem(GraphicsDevice))
                 .AddSystem(world => new SpawnSystem(world, Content))
+                .AddSystem(world => new AnimationSystem())
                 .Build();
 
             Components.Add(_world);

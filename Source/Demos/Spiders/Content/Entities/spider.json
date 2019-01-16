@@ -1,8 +1,17 @@
 ﻿{
   "transform": {
-    "position": [ 400, 240 ]
+    "position": [ 100, 60 ]
   },
   "sprite": {
     "textureRegion": "elthen-spider"
-  }
+  },
+  "animator": {
+    "textureAtlas": "elthen-spider",
+    "animations": [
+      {
+        "name": "idle",
+        "frames": [ 0, 1, 2, 3, 4 ] 
+      }
+    ] 
+  } 
 }
