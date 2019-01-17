@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MonoGame.Extended;
+using MonoGame.Extended.Animations.Animators;
 using MonoGame.Extended.Entities;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.TextureAtlases;
@@ -9,30 +10,6 @@ using Newtonsoft.Json.Linq;
 
 namespace Spiders
 {
-    public class AnimatorAnimation
-    {
-        public AnimatorAnimation(string name)
-        {
-            Name = name;
-            Frames = new List<int>();
-        }
-
-        public string Name { get; }
-        public List<int> Frames { get; }
-    }
-
-    public class Animator
-    {
-        public Animator(TextureAtlas textureAtlas)
-        {
-            TextureAtlas = textureAtlas;
-            Animations = new List<AnimatorAnimation>();
-        }
-
-        public TextureAtlas TextureAtlas { get; }
-        public List<AnimatorAnimation> Animations { get; }
-    }
-
     public class EntityJsonConveter : JsonConverter<Entity>
     {
         private readonly World _world;

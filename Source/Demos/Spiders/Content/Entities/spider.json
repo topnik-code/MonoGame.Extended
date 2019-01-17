@@ -7,11 +7,13 @@
   },
   "animator": {
     "textureAtlas": "elthen-spider",
-    "animations": [
-      {
-        "name": "idle",
-        "frames": [ 0, 1, 2, 3, 4 ] 
+    "animations": {
+      "idle": {
+        "keyFrames": [ 0, 1, 2, 3, 4 ]
+      },
+      "walk": {
+        "keyFrames": [ 9, 10, 11, 12, 13, 14 ]
       }
-    ] 
-  } 
+    }
+  }
 }

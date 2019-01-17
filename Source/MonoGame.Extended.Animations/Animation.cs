@@ -6,19 +6,19 @@ namespace MonoGame.Extended.Animations
     public abstract class Animation : IUpdate, IDisposable
     {
         private readonly bool _disposeOnComplete;
-        private readonly Action _onCompleteAction;
         private bool _isComplete;
 
-        protected Animation(Action onCompleteAction, bool disposeOnComplete)
+        protected Animation(bool disposeOnComplete)
         {
-            _onCompleteAction = onCompleteAction;
             _disposeOnComplete = disposeOnComplete;
             IsPaused = false;
         }
 
+        public Action OnComplete { get; set; }
+
         public bool IsComplete
         {
-            get { return _isComplete; }
+            get => _isComplete;
             protected set
             {
                 if (_isComplete != value)
@@ -27,7 +27,7 @@ namespace MonoGame.Extended.Animations
 
                     if (_isComplete)
                     {
-                        _onCompleteAction?.Invoke();
+                        OnComplete?.Invoke();
 
                         if (_disposeOnComplete)
                             Dispose();
