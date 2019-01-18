@@ -34,8 +34,8 @@ namespace MonoGame.Extended
 
         public bool Contains(float x, float y)
         {
-            float xCalc = (float) (Math.Pow(x - Center.X, 2) / Math.Pow(RadiusX, 2));
-            float yCalc = (float) (Math.Pow(y - Center.Y, 2) / Math.Pow(RadiusY, 2));
+            var xCalc = (float) (Math.Pow(x - Center.X, 2) / Math.Pow(RadiusX, 2));
+            var yCalc = (float) (Math.Pow(y - Center.Y, 2) / Math.Pow(RadiusY, 2));
 
             return xCalc + yCalc <= 1;
         }

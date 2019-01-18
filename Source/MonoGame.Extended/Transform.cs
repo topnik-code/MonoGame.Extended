@@ -90,7 +90,7 @@ namespace MonoGame.Extended
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BaseTransform<TMatrix> Parent
         {
-            get { return _parent; }
+            get => _parent;
             set
             {
                 if (_parent == value)
@@ -255,7 +255,7 @@ namespace MonoGame.Extended
         /// </value>
         public Vector2 Position
         {
-            get { return _position; }
+            get => _position;
             set
             {
                 _position = value;
@@ -272,7 +272,7 @@ namespace MonoGame.Extended
         /// </value>
         public float Rotation
         {
-            get { return _rotation; }
+            get => _rotation;
             set
             {
                 _rotation = value;
@@ -289,7 +289,7 @@ namespace MonoGame.Extended
         /// </value>
         public Vector2 Scale
         {
-            get { return _scale; }
+            get => _scale;
             set
             {
                 _scale = value;

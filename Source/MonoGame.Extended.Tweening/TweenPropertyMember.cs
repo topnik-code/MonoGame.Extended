@@ -22,7 +22,7 @@ namespace MonoGame.Extended.Tweening
         private static Func<object, object> CompileGetMethod(PropertyInfo propertyInfo)
         {
             var param = Expression.Parameter(typeof(object));
-            var instance = Expression.Convert(param, propertyInfo.DeclaringType);
+            var instance = Expression.Convert(param, propertyInfo.DeclaringType ?? throw new InvalidOperationException());
             var convert = Expression.TypeAs(Expression.Property(instance, propertyInfo), typeof(object));
             return Expression.Lambda<Func<object, object>>(convert, param).Compile();
         }
