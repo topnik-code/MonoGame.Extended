@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGame.Extended.Tiled.Renderers
 {
-    public class TiledMapRenderer : IDisposable
+    public class TiledMapRenderer : IDisposable, IUpdate
     {
         private readonly TiledMapModelBuilder _mapModelBuilder;
         private readonly TiledMapEffect _defaultEffect;
@@ -16,9 +16,7 @@ namespace MonoGame.Extended.Tiled.Renderers
 
         public TiledMapRenderer(GraphicsDevice graphicsDevice, TiledMap map = null)
         {
-            if (graphicsDevice == null) throw new ArgumentNullException(nameof(graphicsDevice));
-
-            _graphicsDevice = graphicsDevice;
+            _graphicsDevice = graphicsDevice ?? throw new ArgumentNullException(nameof(graphicsDevice));
             _defaultEffect = new TiledMapEffect(graphicsDevice);
             _mapModelBuilder = new TiledMapModelBuilder(graphicsDevice);
 
@@ -38,7 +36,7 @@ namespace MonoGame.Extended.Tiled.Renderers
             _mapModel = map != null ? _mapModelBuilder.Build(map) : null;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float elapsedSeconds)
         {
             if(_mapModel == null)
                 return;
@@ -46,7 +44,7 @@ namespace MonoGame.Extended.Tiled.Renderers
             for (var tilesetIndex = 0; tilesetIndex < _mapModel.Tilesets.Count; tilesetIndex++)
             {
                 foreach (var animatedTilesetTile in _mapModel.GetAnimatedTiles(tilesetIndex))
-                    animatedTilesetTile.Update(gameTime);
+                    animatedTilesetTile.Update(elapsedSeconds);
             }
 
             foreach(var layer in _mapModel.LayersOfLayerModels)

@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 
 namespace MonoGame.Extended.Timers
 {
@@ -25,7 +24,7 @@ namespace MonoGame.Extended.Timers
             CurrentTime = TimeSpan.Zero;
         }
 
-        protected override void OnUpdate(GameTime gameTime)
+        protected override void OnUpdate(float elapsedSeconds)
         {
             TimeRemaining = Interval - CurrentTime;
             TimeRemainingChanged?.Invoke(this, EventArgs.Empty);

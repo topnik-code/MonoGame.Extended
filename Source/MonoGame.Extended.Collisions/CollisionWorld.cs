@@ -21,9 +21,9 @@ namespace MonoGame.Extended.Collisions
         {
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float elapsedSeconds)
         {
-            var deltaTime = (float) gameTime.ElapsedGameTime.TotalSeconds;
+            var deltaTime = elapsedSeconds;
 
             foreach (var actor in _actors)
             {

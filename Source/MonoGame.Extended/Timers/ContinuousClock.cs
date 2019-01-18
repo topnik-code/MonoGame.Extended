@@ -24,7 +24,7 @@ namespace MonoGame.Extended.Timers
             NextTickTime = CurrentTime + Interval;
         }
 
-        protected override void OnUpdate(GameTime gameTime)
+        protected override void OnUpdate(float elapsedSeconds)
         {
             if (CurrentTime >= NextTickTime)
             {

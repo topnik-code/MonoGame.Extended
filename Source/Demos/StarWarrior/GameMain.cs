@@ -81,7 +81,7 @@ namespace StarWarrior
 
         protected override void Draw(GameTime gameTime)
         {
-            _fpsCounter.Draw(gameTime);
+            _fpsCounter.Draw();
             var fps = $"FPS: {_fpsCounter.FramesPerSecond}";
 
             GraphicsDevice.Clear(Color.Black);

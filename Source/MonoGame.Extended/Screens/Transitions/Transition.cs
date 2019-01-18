@@ -5,7 +5,7 @@ namespace MonoGame.Extended.Screens.Transitions
 {
     public enum TransitionState { In, Out }
 
-    public abstract class Transition : IDisposable
+    public abstract class Transition : IDisposable, IUpdate, IDraw
     {
         private readonly float _halfDuration;
         private float _currentSeconds;
@@ -25,10 +25,8 @@ namespace MonoGame.Extended.Screens.Transitions
         public event EventHandler StateChanged;
         public event EventHandler Completed;
 
-        public void Update(GameTime gameTime)
+        public void Update(float elapsedSeconds)
         {
-            var elapsedSeconds = gameTime.GetElapsedSeconds();
-
             switch (State)
             {
                 case TransitionState.Out:
@@ -53,6 +51,6 @@ namespace MonoGame.Extended.Screens.Transitions
             }
         }
 
-        public abstract void Draw(GameTime gameTime);
+        public abstract void Draw(float elapsedSeconds);
     }
 }

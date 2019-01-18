@@ -195,16 +195,16 @@ namespace Features.Demos
 
         public Vector2 Velocity { get; set; }
 
-        public void Update(GameTime gameTime)
+        public void Update(float elapsedSeconds)
         {
-            _sprite.Update(gameTime);
+            _sprite.Update(elapsedSeconds);
 
             IsOnGround = false;
 
             if (State == ZombieState.Walking && Math.Abs(Velocity.X) < 0.1f)
                 State = ZombieState.Idle;
 
-            _transform.Position += Velocity * gameTime.GetElapsedSeconds();
+            _transform.Position += Velocity * elapsedSeconds;
             Velocity = Vector2.Zero;
         }
 

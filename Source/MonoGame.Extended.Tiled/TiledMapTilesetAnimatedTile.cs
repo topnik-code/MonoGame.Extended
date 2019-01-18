@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 
 namespace MonoGame.Extended.Tiled
 {
-    public class TiledMapTilesetAnimatedTile : TiledMapTilesetTile
+    public class TiledMapTilesetAnimatedTile : TiledMapTilesetTile, IUpdate
     {
         private TimeSpan _timer = TimeSpan.Zero;
         private int _frameIndex;
@@ -21,9 +21,9 @@ namespace MonoGame.Extended.Tiled
             CurrentAnimationFrame = AnimationFrames[0];
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float elapsedSeconds)
         {
-            _timer += gameTime.ElapsedGameTime;
+            _timer += TimeSpan.FromSeconds(elapsedSeconds);
 
             if (_timer <= CurrentAnimationFrame.Duration)
                 return;

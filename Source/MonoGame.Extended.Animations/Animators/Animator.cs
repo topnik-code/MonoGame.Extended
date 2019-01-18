@@ -32,11 +32,11 @@ namespace MonoGame.Extended.Animations.Animators
             return _currentAnimation;
         }
 
-        public void Update(float deltaTime)
+        public void Update(float elapsedSeconds)
         {
             if (_currentAnimation != null && !_currentAnimation.IsComplete)
             {
-                _currentAnimation.Update(deltaTime);
+                _currentAnimation.Update(elapsedSeconds);
 
                 if (_currentAnimation.IsComplete)
                 {
@@ -45,7 +45,5 @@ namespace MonoGame.Extended.Animations.Animators
                 }
             }
         }
-
-        public void Update(GameTime gameTime) => Update(gameTime.GetElapsedSeconds());
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using Microsoft.Xna.Framework;
 
 namespace MonoGame.Extended.Timers
 {
@@ -20,13 +19,13 @@ namespace MonoGame.Extended.Timers
         public TimeSpan CurrentTime { get; protected set; }
         public TimerState State { get; protected set; }
 
-        public void Update(GameTime gameTime)
+        public void Update(float elapsedSeconds)
         {
             if (State != TimerState.Started)
                 return;
 
-            CurrentTime += gameTime.ElapsedGameTime;
-            OnUpdate(gameTime);
+            CurrentTime += TimeSpan.FromSeconds(elapsedSeconds);
+            OnUpdate(elapsedSeconds);
         }
 
         public event EventHandler Started;
@@ -60,6 +59,6 @@ namespace MonoGame.Extended.Timers
         }
 
         protected abstract void OnStopped();
-        protected abstract void OnUpdate(GameTime gameTime);
+        protected abstract void OnUpdate(float elapsedSeconds);
     }
 }

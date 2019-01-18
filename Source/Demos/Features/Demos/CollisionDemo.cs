@@ -94,12 +94,12 @@ namespace Features.Demos
 
         protected override void Update(GameTime gameTime)
         {
+            var elapsedSeconds = gameTime.GetElapsedSeconds();
             UpdateControlledBall(gameTime, _controllableBall);
 
             foreach (var actor in _actors)
-            {
-                actor.Update(gameTime);
-            }
+                actor.Update(elapsedSeconds);
+
             _collisionComponent.Update(gameTime);
             base.Update(gameTime);
         }
@@ -142,7 +142,7 @@ namespace Features.Demos
 
     #region Collision Demo Implementation
 
-    class DemoActor : ICollisionActor, IUpdate
+    public class DemoActor : ICollisionActor, IUpdate
     {
         private readonly Sprite _sprite;
         private Vector2 _position;
@@ -158,7 +158,7 @@ namespace Features.Demos
 
         public Vector2 Position
         {
-            get { return _position; }
+            get => _position;
             set
             {
                 _position = value;
@@ -180,9 +180,9 @@ namespace Features.Demos
             _sprite.Draw(spriteBatch, Position, 0, Vector2.One);
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(float elapsedSeconds)
         {
-            Position += gameTime.GetElapsedSeconds() * Velocity;
+            Position += elapsedSeconds * Velocity;
         }
     }
 
@@ -197,7 +197,7 @@ namespace Features.Demos
     /// <summary>
     /// Ball that bounces on wall
     /// </summary>
-    class DemoBall : DemoActor
+    public class DemoBall : DemoActor
     {
         public DemoBall(Sprite sprite) : base(sprite)
         {
@@ -205,9 +205,9 @@ namespace Features.Demos
             Bounds = new CircleF(Position + Offset, 60);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(float elapsedSeconds)
         {
-            base.Update(gameTime);
+            base.Update(elapsedSeconds);
             Bounds.Position = Position;
         }
 

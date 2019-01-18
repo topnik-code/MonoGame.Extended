@@ -24,7 +24,7 @@ namespace MonoGame.Extended.Screens.Transitions
 
         public Color Color { get; }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(float elapsedSeconds)
         {
             var halfWidth = _graphicsDevice.Viewport.Width / 2f;
             var halfHeight = _graphicsDevice.Viewport.Height / 2f;

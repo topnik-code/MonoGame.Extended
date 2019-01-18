@@ -99,8 +99,8 @@ namespace Features
                 ActiveScreen = _selectDemoScreen,
             };
 
-            _selectDemoScreen.Hide();
-            LoadDemo("Animations");
+            //_selectDemoScreen.Hide();
+            //LoadDemo("Animations");
         }
 
         private void LoadDemo(string name)
@@ -117,12 +117,13 @@ namespace Features
 
         protected override void Update(GameTime gameTime)
         {
+            var elapsedSeconds = gameTime.GetElapsedSeconds();
             var keyboardState = Keyboard.GetState();
 
             if (keyboardState.IsKeyDown(Keys.Escape) && _previousKeyboardState.IsKeyUp(Keys.Escape))
                 Back();
 
-            _fpsCounter.Update(gameTime);
+            _fpsCounter.Update(elapsedSeconds);
             _guiSystem.Update(gameTime);
             _currentDemo?.OnUpdate(gameTime);
 
@@ -147,7 +148,7 @@ namespace Features
         {
             GraphicsDevice.Clear(Color.Black);
 
-            _fpsCounter.Draw(gameTime);
+            _fpsCounter.Draw();
             Window.Title = $"{_currentDemo?.Name} {_fpsCounter.FramesPerSecond}";
 
             base.Draw(gameTime);

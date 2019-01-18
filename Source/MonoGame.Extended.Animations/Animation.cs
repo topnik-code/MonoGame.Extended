@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 
 namespace MonoGame.Extended.Animations
 {
@@ -46,11 +45,6 @@ namespace MonoGame.Extended.Animations
             IsDisposed = true;
         }
 
-        public void Update(GameTime gameTime)
-        {
-            Update(gameTime.GetElapsedSeconds());
-        }
-
         public void Play()
         {
             IsPaused = false;
@@ -72,15 +66,15 @@ namespace MonoGame.Extended.Animations
             CurrentTime = 0;
         }
 
-        protected abstract bool OnUpdate(float deltaTime);
+        protected abstract bool OnUpdate(float elapsedSeconds);
 
-        public void Update(float deltaTime)
+        public void Update(float elapsedSeconds)
         {
             if (!IsPlaying)
                 return;
 
-            CurrentTime += deltaTime;
-            IsComplete = OnUpdate(deltaTime);
+            CurrentTime += elapsedSeconds;
+            IsComplete = OnUpdate(elapsedSeconds);
         }
     }
 }

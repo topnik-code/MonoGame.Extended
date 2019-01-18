@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 
 namespace MonoGame.Extended
 {
@@ -15,9 +14,9 @@ namespace MonoGame.Extended
 
         public int FramesPerSecond { get; private set; }
 
-        public void Update(GameTime gameTime)
+        public void Update(float elapsedSeconds)
         {
-            _timer += gameTime.ElapsedGameTime;
+            _timer += TimeSpan.FromSeconds(elapsedSeconds);
             if (_timer <= _oneSecondTimeSpan)
                 return;
 
@@ -26,7 +25,7 @@ namespace MonoGame.Extended
             _timer -= _oneSecondTimeSpan;
         }
 
-        public void Draw(GameTime gameTime)
+        public void Draw()
         {
             _framesCounter++;
         }

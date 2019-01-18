@@ -24,7 +24,7 @@ namespace MonoGame.Extended.Screens.Transitions
 
         public Color Color { get; }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(float elapsedSeconds)
         {
             _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             _spriteBatch.FillRectangle(_graphicsDevice.Viewport.Bounds, Color * Value);

@@ -1,11 +1,10 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using MonoGame.Extended.Animations.SpriteSheets;
 using MonoGame.Extended.Sprites;
 
 namespace MonoGame.Extended.Animations
 {
-    public class AnimatedSprite : Sprite
+    public class AnimatedSprite : Sprite, IUpdate
     {
         private readonly SpriteSheetAnimationFactory _animationFactory;
         private SpriteSheetAnimation _currentAnimation;
@@ -32,18 +31,14 @@ namespace MonoGame.Extended.Animations
             return _currentAnimation;
         }
 
-        public void Update(float deltaTime)
+        public void Update(float elapsedSeconds)
         {
             if (_currentAnimation != null && !_currentAnimation.IsComplete)
             {
-                _currentAnimation.Update(deltaTime);
+                _currentAnimation.Update(elapsedSeconds);
                 TextureRegion = _currentAnimation.CurrentFrame;
             }
         }
 
-        public void Update(GameTime gameTime)
-        {
-            Update(gameTime.GetElapsedSeconds());
-        }
     }
 }
