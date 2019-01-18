@@ -2,7 +2,7 @@
 
 namespace MonoGame.Extended
 {
-    public class FramesPerSecondCounter : IUpdate
+    public class FramesPerSecondCounter : IUpdate, IDraw
     {
         private static readonly TimeSpan _oneSecondTimeSpan = new TimeSpan(0, 0, 1);
         private int _framesCounter;
@@ -25,7 +25,7 @@ namespace MonoGame.Extended
             _timer -= _oneSecondTimeSpan;
         }
 
-        public void Draw()
+        public void Draw(float elapsedSeconds)
         {
             _framesCounter++;
         }

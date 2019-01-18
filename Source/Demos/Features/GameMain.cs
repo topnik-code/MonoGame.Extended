@@ -148,7 +148,7 @@ namespace Features
         {
             GraphicsDevice.Clear(Color.Black);
 
-            _fpsCounter.Draw();
+            _fpsCounter.Draw(gameTime);
             Window.Title = $"{_currentDemo?.Name} {_fpsCounter.FramesPerSecond}";
 
             base.Draw(gameTime);

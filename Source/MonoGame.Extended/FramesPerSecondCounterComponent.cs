@@ -21,7 +21,7 @@ namespace MonoGame.Extended
 
         public override void Draw(GameTime gameTime)
         {
-            _fpsCounter.Draw();
+            _fpsCounter.Draw(gameTime);
         }
     }
 }

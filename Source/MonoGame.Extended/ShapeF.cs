@@ -29,21 +29,18 @@
         {
             var intersects = false;
 
-            if (a is RectangleF rectA && b is RectangleF rectB)
+            switch (a)
             {
-                intersects = rectA.Intersects(rectB);
-            }
-            else if (a is CircleF circA && b is CircleF circB)
-            {
-                intersects = circA.Intersects(circB);
-            }
-            else if (a is RectangleF rect1 && b is CircleF circ1)
-            {
-                return Intersects(circ1, rect1);
-            }
-            else if (a is CircleF circ2 && b is RectangleF rect2)
-            {
-                return Intersects(circ2, rect2);
+                case RectangleF rectA when b is RectangleF rectB:
+                    intersects = rectA.Intersects(rectB);
+                    break;
+                case CircleF circA when b is CircleF circB:
+                    intersects = circA.Intersects(circB);
+                    break;
+                case RectangleF rect1 when b is CircleF circ1:
+                    return Intersects(circ1, rect1);
+                case CircleF circ2 when b is RectangleF rect2:
+                    return Intersects(circ2, rect2);
             }
 
             return intersects;

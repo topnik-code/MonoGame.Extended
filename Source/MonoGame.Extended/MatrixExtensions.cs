@@ -7,10 +7,7 @@ namespace MonoGame.Extended
     {
         public static bool Decompose(this Matrix matrix, out Vector2 position, out float rotation, out Vector2 scale)
         {
-            Vector3 position3, scale3;
-            Quaternion rotationQuaternion;
-
-            if (matrix.Decompose(out scale3, out rotationQuaternion, out position3))
+            if (matrix.Decompose(out var scale3, out var rotationQuaternion, out var position3))
             {
                 var direction = Vector2.Transform(Vector2.UnitX, rotationQuaternion);
                 rotation = (float) Math.Atan2(direction.Y, direction.X);
