@@ -3,17 +3,12 @@
     "position": [ 100, 60 ]
   },
   "sprite": {
-    "textureRegion": "elthen-spider"
   },
   "animator": {
     "textureAtlas": "elthen-spider",
     "animations": {
-      "idle": {
-        "keyFrames": [ 0, 1, 2, 3, 4 ]
-      },
-      "walk": {
-        "keyFrames": [ 9, 10, 11, 12, 13, 14 ]
-      }
+      "idle": { "keyFrames": [ 0, 1, 2, 3, 4 ] },
+      "walk": { "keyFrames": [ 9, 10, 11, 12, 13, 14 ] }
     }
   }
 }

@@ -62,7 +62,8 @@ namespace Spiders
                     new TextureRegion2DJsonConverter(this),
                     new TextureAtlasJsonConveter(this),
                     new EntityJsonConveter(_world),
-                    new Vector2JsonConverter()
+                    new Vector2JsonConverter(),
+                    new ColorJsonConverter()
                 }
             };
 

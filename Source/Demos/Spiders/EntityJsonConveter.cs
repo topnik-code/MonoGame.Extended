@@ -4,7 +4,6 @@ using MonoGame.Extended;
 using MonoGame.Extended.Animations.Animators;
 using MonoGame.Extended.Entities;
 using MonoGame.Extended.Sprites;
-using MonoGame.Extended.TextureAtlases;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
