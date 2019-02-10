@@ -16,9 +16,8 @@ namespace MonoGame.Extended.Animations.SpriteSheets
 
         public SpriteSheetAnimation(string name, TextureRegion2D[] keyFrames, float frameDuration = DefaultFrameDuration,
             bool isLooping = true, bool isReversed = false, bool isPingPong = false)
-            : base(false)
+            : base(name, false)
         {
-            Name = name;
             KeyFrames = keyFrames;
             FrameDuration = frameDuration;
             IsLooping = isLooping;
@@ -32,7 +31,6 @@ namespace MonoGame.Extended.Animations.SpriteSheets
         {
         }
 
-        public string Name { get; }
         public TextureRegion2D[] KeyFrames { get; }
         public float FrameDuration { get; set; }
         public bool IsLooping { get; set; }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using MonoGame.Extended.TextureAtlases;
 
 namespace MonoGame.Extended.Animations.Animators
