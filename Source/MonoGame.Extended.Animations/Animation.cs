@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace MonoGame.Extended.Animations
 {
@@ -14,8 +15,10 @@ namespace MonoGame.Extended.Animations
             _disposeOnComplete = disposeOnComplete;
         }
 
-        public string Name { get; }
+        [JsonProperty]
+        public string Name { get; set; }
 
+        [JsonIgnore]
         public Action OnComplete { get; set; }
 
         public bool IsComplete

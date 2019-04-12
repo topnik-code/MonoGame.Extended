@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace MonoGame.Extended.Animations.Animators
 {
@@ -14,11 +15,14 @@ namespace MonoGame.Extended.Animations.Animators
             KeyFrameIndex = IsReversed ? KeyFrames.Length - 1 : 0;
         }
 
+        [JsonProperty]
         public int[] KeyFrames { get; }
+
         public float FrameDuration { get; set; } = DefaultFrameDuration;
         public bool IsLooping { get; set; } = true;
         public bool IsReversed { get; set; }
         public bool IsPingPong { get; set; }
+
         public new bool IsComplete => CurrentTime >= AnimationDuration;
 
         public float AnimationDuration => IsPingPong
